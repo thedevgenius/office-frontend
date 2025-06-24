@@ -1,8 +1,11 @@
 'use client';
 
+import axios from "axios";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const loginSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
@@ -12,6 +15,8 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const Login = () => {
+    const router = useRouter();
+    
     const {
         register,
         handleSubmit,
@@ -21,7 +26,19 @@ const Login = () => {
     });
 
     const onSubmit = (data: LoginFormData) => {
-        console.log(data);
+        axios.post('http://localhost:8080/login', { email: data.email, password: data.password }, { withCredentials: true })
+            .then(response => {
+                router.push('/');
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.error('Login failed:', error.response.data);
+                } else if (error.request) {
+                    console.error('No response received from server. Is the backend running and accessible?');
+                } else {
+                    console.error('Error setting up request:', error.message);
+                }
+            });
     }
 
     return (
