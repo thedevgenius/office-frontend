@@ -1,6 +1,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import Header from "@/components/header/Header";
 import type { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -21,7 +22,7 @@ export default function ProtectedLayout({
                     {children}
                 </main>
             </div>
-            
+            <Script src="/js/script.js"></Script>
         </>
     );
 }

@@ -22,7 +22,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${nunito.variable} antialiased flex h-screen`}>
                 {children}
-                <Script src="/js/script.js"></Script>
+                
             </body>
         </html>
     );
